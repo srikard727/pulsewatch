@@ -18,7 +18,7 @@ services:
     environment: &env
       DATABASE_URL: postgresql+psycopg://pulse:localdev@db/pulse
       REDIS_URL: redis://redis:6379/0
-    command: sh -c 'python -c "from main import Base,engine; Base.metadata.create_all(engine)" && uvicorn main:app --host 0.0.0.0'
+    command: sh -c 'alembic upgrade head && uvicorn main:app --host 0.0.0.0'
     depends_on:
       db: {condition: service_healthy}
     ports: ['127.0.0.1:8000:8000']
